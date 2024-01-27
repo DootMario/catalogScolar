@@ -27,7 +27,7 @@ if (!isset($_SESSION["prenume_nume"])){
 $Roluri = array(1, 2, 3);
 
 $Server = "localhost";
-$DbName = "catalogscolar";
+$DbName = "catalogScolar";
 $dsn = "mysql:host=$Server; dbname=$DbName; charset=UTF8";
 $UserDB = "admin";
 $PwdDB = "1323gaye";
