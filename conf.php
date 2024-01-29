@@ -27,10 +27,10 @@ if (!isset($_SESSION["prenume_nume"])){
 $Roluri = array(1, 2, 3);
 
 $Server = "localhost";
-$DbName = "catalogScolar";
-$dsn = "mysql:host=$Server; dbname=$DbName; charset=UTF8";
-$UserDB = "admin";
-$PwdDB = "1323gaye";
+$DbName = "catalogscolar";
+$dsn = "mysql:host=$Server; dbname=$DbName; charset=UTF8;";
+$UserDB = "doot";
+$PwdDB = "doot";
 $Options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
 
 try {

@@ -11,11 +11,11 @@ file_exists(__DIR__."/conf.php")?
         <?php
             file_exists(__DIR__ . "/modules/header.php") ?
                 require_once __DIR__ . "/modules/header.php" :
-                die("Fișierul head nu a fost găsit!");
+                die("Fișierul header nu a fost găsit!");
         ?>
     </head>
     <body data-bs-theme="dark">
-    <div class="container bg-secondary-subtle my-4 p-4">
+    <div class="container bg-secondary-subtle my-4 p-4 form">
         <h1 class="text-center">Login</h1>
         <form method="post" action="" name="login" class="needs-validation" novalidate>
             <fieldset>
