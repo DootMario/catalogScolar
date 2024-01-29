@@ -32,7 +32,7 @@ if (empty($_SESSION["nume_utilizator"]) || !in_array($_SESSION["rol_utilizator"]
 
         <div class="container bg-secondary-subtle m-auto mt-5 p-5 form">
             <h1 class="text-center">Profil</h1>
-            <form method="post" action="" name="profile" class="needs-validation" novalidate>c
+            <form method="post" action="" name="profile" class="needs-validation" novalidate>
                 <fieldset>
                     <div class="row">
                         <div class="col-6 p-2">
