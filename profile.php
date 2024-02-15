@@ -4,13 +4,13 @@ file_exists(__DIR__."/conf.php") ?
     die("Fișierul de configurare nu a fost găsit!");
 
 if (empty($_SESSION["nume_utilizator"]) || !in_array($_SESSION["rol_utilizator"], $Roluri)) {
-    header("Location: /deconectare.php");
+    header("Location: deconectare.php");
     exit();
 }
 
 ?>
 
-<html lang="ro">
+    <html lang="ro">
     <head>
         <title>
             <?php echo $_SESSION["nume_utilizator"]; ?>
@@ -24,46 +24,68 @@ if (empty($_SESSION["nume_utilizator"]) || !in_array($_SESSION["rol_utilizator"]
 
     <body data-bs-theme="dark">
 
-        <?php
-        file_exists(__DIR__ . "/modules/menu.php") ?
-            require_once __DIR__ . "/modules/menu.php" :
-            die("Fișierul menu nu a fost găsit!");
-        ?>
+    <?php
+    file_exists(__DIR__ . "/modules/menu.php") ?
+        require_once __DIR__ . "/modules/menu.php" :
+        die("Fișierul menu nu a fost găsit!");
+    ?>
 
-        <div class="container bg-secondary-subtle m-auto mt-5 p-5 form">
-            <h1 class="text-center">Profil</h1>
-            <form method="post" action="" name="profile" class="needs-validation" novalidate>
-                <fieldset>
-                    <div class="row">
-                        <div class="col-6 p-2">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="<?php echo $_SESSION["nume_utilizator"];?>">
-                        </div>
-                        <div class="col-6 p-2">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="New Password">
-                        </div>
-                        <div class="col-6 p-2">
-                            ID: <?php echo $_SESSION["id_utilizator"]?>
-                        </div>
-                        <div class="col-6 p-2">
-                            Privilege: <?php echo $_SESSION["rol_utilizator"];?>
+    <div class="container bg-secondary-subtle m-auto mt-5 p-5 form">
+        <h1 class="text-center">Profil</h1>
+        <form method="post" action="" name="profile" class="needs-validation" novalidate>
+            <fieldset>
+                <div class="row">
+                    <div class="col-12 p-2">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" value="<?php echo $_SESSION["nume_utilizator"];?>">
+                    </div>
+                    <div class="col-6 p-2">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password1" name="password1" placeholder="New Password" autocomplete="off">
+                        <div id="pash" class="form-text">
+                            <span id="lm", class="bi bi-x-lg" style="color: #FF0004;"></span>
+                            cel putin o litera mica
+                            <span id="lM", class="bi bi-x-lg" style="color: #FF0004;"></span>
+                            cel putin o litera mare
+                            <span id="cif", class="bi bi-x-lg" style="color: #FF0004;"></span>
+                            cel putin o cifra
+                            <span id="cs", class="bi bi-x-lg" style="color: #FF0004;"></span>
+                            cel putin un caracter special
+                            <span id="lp", class="bi bi-x-lg" style="color: #FF0004;"></span>
+                            cel putin 9 caractere
+                            <span id="passP"></span>
                         </div>
                     </div>
-                </fieldset>
-                <button class="btn btn-primary mx-auto mt-2" type="submit">Update</button>
-            </form>
-        </div>
+                    <div class="col-6 p-2">
+                        <label for="password" class="form-label">Confirm</label>
+                        <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm Password" autocomplete="off">
+                        <div id="pash2" class="form-text">
+                            <span id="cp", class="bi bi-x-lg" style="color: #FF0004;"></span>
+                            parolele nu corespund
+                        </div>
+                    </div>
+                    <div class="col-6 p-2">
+                        ID: <?php echo $_SESSION["id_utilizator"]?>
+                    </div>
+                    <div class="col-6 p-2">
+                        Privilege: <?php echo $_SESSION["rol_utilizator"];?>
+                    </div>
+                </div>
+            </fieldset>
+            <button class="btn btn-primary mx-auto mt-2" type="submit">Update</button>
+        </form>
+    </div>
     </body>
+    <script src="pass.js"></script>
     <script src="scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</html>
+    </html>
 
 <?php
 
 if (htmlspecialchars($_SERVER["REQUEST_METHOD"]) == "POST") {
     $nume_utilizator = filter_input(INPUT_POST, "username", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $parola = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $parola = filter_input(INPUT_POST, "password1", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     if (!empty($nume_utilizator) || !empty($parola)) {
         try {
@@ -74,10 +96,9 @@ if (htmlspecialchars($_SERVER["REQUEST_METHOD"]) == "POST") {
             }
 
             if ($cerereSQL->execute(array(":nume_utilizator" => $nume_utilizator, ":parola" => md5($parola)))) {
-                //have to change the session variables in order for the page to update but that means another query inside of this and im too lazy to do it rn
-                header("refresh:0");
+                //probably need some pass valid cus, buuuut not rn
                 echo '<div class="alert alert-success alert-dismissible fade show" role="alert">Date de logare updatate cu success!<br/>'.'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-                //probably could put it to sleep for like 5 secs and display a timer then kill the session and promt relogin but ehh
+                header("location: deconectare.php");
             }
         }
         catch (PDOException $e) {

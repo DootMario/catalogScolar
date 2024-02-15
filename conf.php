@@ -43,4 +43,17 @@ try {
 
 }
 
+function url(){
+
+    return sprintf(
+
+        "%s://%s",
+        isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !='OFF'?
+            'https':'http',
+        $_SERVER['SERVER_NAME'].'/catalogScolar'
+
+    );
+
+}
+
 ?>
